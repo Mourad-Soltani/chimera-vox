@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chimera-vox"
-version = "0.1.1"
+version = "0.1.2"
 description = "Forge videos from a single photo and a script — free-tier pipeline"
 readme = "README.md"
 license = { text = "MIT" }

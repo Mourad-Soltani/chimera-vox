@@ -1,0 +1,14 @@
+# Optional override for Hugging Face ZeroGPU Space IDs.
+# ChimeraVox loads this file (if present) over the built-in defaults.
+# Use this when a Space is renamed, moved, or replaced — no code change required.
+#
+# Example:
+# [spaces]
+# ltx = "someuser/LTX-2.3-turbo-v2"
+# cogvideox = "another/CogVideoX-5B"
+# wan = "org/Wan-Animate"
+
+[spaces]
+ltx = "rahul7star/LTX-2.3-turbo"
+cogvideox = "THUDM/CogVideoX-5B"
+wan = "Wan-AI/Wan-Animate"

@@ -26,6 +26,9 @@ async def generate_clips(
     """
     Generate one clip per segment. Uses last-frame continuity so the subject
     evolves naturally from clip to clip.
+
+    If every provider in the chain fails, automatically falls back to the
+    Ken Burns static-image provider so the user still gets a narrated video.
     """
     ensure_dir(temp_dir)
     clips: list[ProviderResult] = []
@@ -40,7 +43,10 @@ async def generate_clips(
             seg.estimated_duration,
         )
         result = await _generate_with_fallback(
-            providers, current_image, composed, min(clip_duration, seg.estimated_duration + 0.5)
+            providers,
+            current_image,
+            composed,
+            min(clip_duration, seg.estimated_duration + 0.5),
         )
         clips.append(result)
 
@@ -63,7 +69,10 @@ async def _generate_with_fallback(
     duration: float,
 ) -> ProviderResult:
     last_error: Exception | None = None
+    tried_names: list[str] = []
+
     for provider in providers:
+        tried_names.append(provider.name)
         try:
             log.debug("Trying provider: %s", provider.name)
             return await provider.generate_clip(image, prompt, duration)
@@ -71,8 +80,25 @@ async def _generate_with_fallback(
             last_error = exc
             log.warning("Provider %s failed: %s", provider.name, exc)
             continue
+
+    # Automatic static-image floor: Ken Burns if not already tried
+    if "kenburns" not in tried_names and "mock" not in tried_names:
+        log.warning(
+            "All AI providers failed — falling back to Ken Burns static floor"
+        )
+        try:
+            from chimera_vox.providers.kenburns import KenBurnsProvider
+
+            kb = KenBurnsProvider()
+            return await kb.generate_clip(image, prompt, duration)
+        except Exception as kb_exc:  # noqa: BLE001
+            last_error = kb_exc
+            log.error("Ken Burns fallback also failed: %s", kb_exc)
+
     raise AllProvidersFailedError(
-        f"All providers failed. Last error: {last_error}"
+        f"All providers failed (tried: {', '.join(tried_names)}). "
+        f"Last error: {last_error}. "
+        "See docs/RUNBOOK.md for recovery steps."
     )
 
 

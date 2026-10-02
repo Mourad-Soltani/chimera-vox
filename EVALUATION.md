@@ -1,49 +1,65 @@
-# ChimeraVox v0.1.0 — Evaluation
+# ChimeraVox — Evaluation
 
 **Date:** 2026-10-02  
+**Version evaluated:** 0.1.2  
 **Author / Owner:** Mourad Soltani (@Mourad-Soltani)
 
 ## Overall Assessment
 
-**Status: Solid foundation, production-ready for the offline / mock path; experimental for live ZeroGPU generation.**
+**Status: CI-ready and development-ready. Live ZeroGPU path is experimental.**
 
-ChimeraVox delivers a clean, stage-based architecture that correctly separates concerns (config → health → parse → TTS → generate → stitch → upscale). The code is typed, tested for the critical pure-Python and FFmpeg paths, and ships with a working CLI and mock provider for deterministic testing.
+ChimeraVox has a clean stage-based architecture, a working offline path (`--dry-run` + MockProvider), automatic Ken Burns static-image fallback when all AI providers fail, a user-overridable `spaces.toml`, and a concrete failure runbook. The foundation is real.
+
+The live image-to-video path remains bound by free-tier supply constraints (quotas, queues, Space churn). That is a category ceiling, not a ChimeraVox-specific defect.
 
 ### Strengths
 
 | Area | Rating | Notes |
 |------|--------|-------|
-| Architecture | ★★★★★ | Linear pipeline, replaceable stages, clear error hierarchy |
-| Code quality | ★★★★☆ | Consistent style, proper dunders, lazy imports for heavy deps |
-| Offline testability | ★★★★★ | `--dry-run` + MockProvider lets you exercise the full pipeline without network |
-| CLI / UX | ★★★★☆ | Typer + Rich, sensible defaults, health command, voice listing |
-| Free-tier honesty | ★★★★★ | README and docs are transparent about quotas, native res, upscaling |
-| Extensibility | ★★★★☆ | New providers = one class + registry entry |
+| Architecture | ★★★★★ | Linear pipeline, replaceable stages, clear errors |
+| Offline / CI path | ★★★★★ | `--dry-run`, MockProvider, GitHub Actions matrix |
+| Resilience floor | ★★★★☆ | Automatic Ken Burns fallback + RUNBOOK.md |
+| Space override | ★★★★☆ | `spaces.toml` — no code release needed for renames |
+| CLI / UX | ★★★★☆ | Typer + Rich, health, voices, dry-run |
+| Free-tier honesty | ★★★★★ | README, EVALUATION, RUNBOOK are transparent |
 
 ### Weaknesses / Risks
 
-| Risk | Severity | Mitigation |
-|------|----------|------------|
-| ZeroGPU Space API drift | High | Providers probe multiple endpoint names; still brittle if signatures change |
-| Daily quotas / queue times | High | Documented; fallback chain helps but does not eliminate waits |
-| Gradio client / Space stability | Medium | Retries + exponential backoff; mock path available |
-| No real end-to-end CI against live Spaces | Medium | CI runs offline tests only (by design) |
-| edge-tts / gradio-client not always installable in restricted envs | Low | Lazy imports; declared in pyproject |
+| Risk | Severity | Notes |
+|------|----------|-------|
+| ZeroGPU quota / queue | High | Supply-side; mitigated by token + fallback chain + Ken Burns floor |
+| Space rename / deprecation | Medium | Mitigated by `spaces.toml` + RUNBOOK |
+| Gradio API signature drift | Medium | Providers probe multiple endpoints; still brittle |
+| Live path not E2E-tested in CI | Medium | By design (CI is offline-only) |
+| edge-tts install in restricted envs | Low | Lazy import; health warns rather than hard-fails |
 
-### Readiness Matrix
+### Known failure modes (actionable)
 
-- **Local dry-run / CI / development** → Ready
-- **Personal use with HF token + patience** → Ready (experimental)
-- **Production / unattended / high-volume** → Not ready (quota + Space reliability)
+1. **Space renamed/deleted** → edit `spaces.toml` or drop the provider from `--providers`. See RUNBOOK Scenario 1.
+2. **Quota exhausted** → set `HF_TOKEN`, wait, or let Ken Burns floor take over. See RUNBOOK Scenario 2.
+3. **All AI providers down** → automatic Ken Burns pan/zoom over the photo + TTS. User still gets a video. See RUNBOOK Scenario 3.
+4. **FFmpeg / edge-tts missing** → install system/package deps. Health check reports it.
 
-### Recommended next steps
+### Readiness matrix
 
-1. Pin or snapshot working Gradio endpoint signatures once a stable Space is confirmed.
-2. Add optional local image-to-video backends (e.g. AnimateDiff, Stable Video) as paid/self-hosted providers.
-3. Cache last successful frames more aggressively to reduce regeneration cost.
-4. Add a simple web UI (Gradio or Streamlit) that wraps the same pipeline.
-5. Publish a short demo video generated with the mock path + a real Space run.
+| Path | Status |
+|------|--------|
+| Offline dry-run / unit tests / CI | Ready |
+| Local development against mock + Ken Burns | Ready |
+| Personal use with HF token + patience | Experimental |
+| Unattended / high-volume / production SLA | Not ready |
+
+### Framing note
+
+Earlier language of “production-ready for the offline/mock path” was slightly oversold. More precise: the offline path is **CI-ready and development-ready**. The real path a user cares about (live ZeroGPU generation) has not been exercised end-to-end on a clean machine in CI. That is acceptable at this stage; it is not the same as production-ready.
+
+### Recommended next (then stop)
+
+1. ~~Failure runbook~~ → done (`docs/RUNBOOK.md`)
+2. ~~Static-image floor~~ → done (Ken Burns auto-fallback)
+3. ~~Space override without code release~~ → done (`spaces.toml`)
+4. Do **not** add paid-provider fallbacks until the free-tier edges above are proven stable in real use.
 
 ### Conclusion
 
-v0.1.0 is a credible, well-structured free-tier photo-to-video tool. The mock provider and full offline test suite make it maintainable. Live generation quality and reliability remain bound by the underlying ZeroGPU Spaces; the code does everything reasonable to tolerate that reality.
+v0.1.2 is a credible free-tier photo-to-video foundation with an honest resilience floor. The remaining risk is external (Space availability and quotas). The code does what is reasonable to tolerate that reality.

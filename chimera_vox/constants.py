@@ -1,5 +1,8 @@
 """Project-wide constants."""
 
+from __future__ import annotations
+
+from pathlib import Path
 from typing import Final
 
 # Resolution presets: (width, height)
@@ -15,15 +18,50 @@ DEFAULT_FPS: Final[int] = 24
 DEFAULT_CLIP_DURATION: Final[float] = 3.0
 DEFAULT_VOICE: Final[str] = "en-US-AriaNeural"
 
-# Provider order (first available wins)
+# Provider order (first available wins). kenburns is the automatic last-resort floor.
 DEFAULT_PROVIDERS: Final[list[str]] = ["ltx", "cogvideox", "wan"]
 
-# Hugging Face ZeroGPU Spaces
-SPACES: Final[dict[str, str]] = {
+# Built-in Hugging Face ZeroGPU Spaces (overridable via spaces.toml)
+_DEFAULT_SPACES: dict[str, str] = {
     "ltx": "rahul7star/LTX-2.3-turbo",
     "cogvideox": "THUDM/CogVideoX-5B",
     "wan": "Wan-AI/Wan-Animate",
 }
+
+
+def _load_spaces() -> dict[str, str]:
+    """Load Space IDs, preferring spaces.toml in cwd or package root if present."""
+    spaces = dict(_DEFAULT_SPACES)
+    candidates = [
+        Path.cwd() / "spaces.toml",
+        Path(__file__).resolve().parent.parent / "spaces.toml",
+    ]
+    for path in candidates:
+        if not path.is_file():
+            continue
+        try:
+            # Minimal TOML subset parser for [spaces] key = "value"
+            section = False
+            for line in path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if line.startswith("["):
+                    section = line.strip("[]").strip().lower() == "spaces"
+                    continue
+                if section and "=" in line:
+                    key, _, val = line.partition("=")
+                    key = key.strip().lower()
+                    val = val.strip().strip('"').strip("'")
+                    if key and val:
+                        spaces[key] = val
+            break  # first file found wins
+        except Exception:
+            continue
+    return spaces
+
+
+SPACES: Final[dict[str, str]] = _load_spaces()
 
 # Common Gradio API endpoint names to probe
 API_CANDIDATES: Final[list[str]] = [

@@ -7,7 +7,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 **Author:** Mourad Soltani (@Mourad-Soltani)  
-**Version:** 0.1.1
+**Version:** 0.1.2
 
 ChimeraVox turns a still photo plus a written script into a narrated, AI-animated
 video at up to 8K resolution, using only free infrastructure:
@@ -16,6 +16,9 @@ video at up to 8K resolution, using only free infrastructure:
 - **Microsoft Edge Neural Voices** (via `edge-tts`) for narration — no API key
 - **FFmpeg** for stitching, audio muxing, and resolution upscaling
 - **Mock provider** for fully offline dry-runs and CI
+- **Ken Burns fallback** — if all AI providers fail, you still get a narrated video
+- **spaces.toml** — override Space IDs without touching code
+- **Failure runbook** — `docs/RUNBOOK.md`
 
 ## Quick Start
 
@@ -92,8 +95,9 @@ make health       # health checks
 chimera-vox run --dry-run ...   # full offline pipeline test
 ```
 
-See [EVALUATION.md](EVALUATION.md) for a structured assessment of readiness and risks.  
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the internal design.
+See [EVALUATION.md](EVALUATION.md) for readiness assessment.
+See [docs/RUNBOOK.md](docs/RUNBOOK.md) for failure recovery steps.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for internal design.  
 
 ## License
 
