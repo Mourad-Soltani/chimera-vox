@@ -33,7 +33,11 @@ async def run_pipeline(config: Config) -> Path:
     ensure_dir(config.temp_dir)
     ensure_dir(config.cache_dir)
 
-    providers = build_provider_chain(config.providers, hf_token=config.hf_token)
+    if config.dry_run:
+        log.info("Dry-run mode: using mock provider only")
+        providers = build_provider_chain(["mock"], hf_token=None)
+    else:
+        providers = build_provider_chain(config.providers, hf_token=config.hf_token)
 
     # Health checks
     if not config.skip_health_check:
@@ -95,23 +99,20 @@ async def run_pipeline(config: Config) -> Path:
         )
         progress.update(stitch_task, completed=1)
 
-        # Upscale if needed
+        # Upscale (always normalize to target resolution + aspect pad)
         final = config.output
-        if config.resolution in ("4k", "8k") or True:  # always run through upscaler for consistency
-            up_task = progress.add_task(
-                f"Upscaling to {config.resolution}…", total=None
-            )
-            upscale_video(
-                input_path=stitched,
-                output_path=final,
-                resolution=config.resolution,
-                temp_dir=config.temp_dir,
-                fps=config.fps,
-                threads=config.threads or 4,
-            )
-            progress.update(up_task, completed=1)
-        else:
-            stitched.replace(final)
+        up_task = progress.add_task(
+            f"Encoding / upscaling to {config.resolution}…", total=None
+        )
+        upscale_video(
+            input_path=stitched,
+            output_path=final,
+            resolution=config.resolution,
+            temp_dir=config.temp_dir,
+            fps=config.fps,
+            threads=config.threads or 4,
+        )
+        progress.update(up_task, completed=1)
 
     elapsed = time.time() - start
     console.print(

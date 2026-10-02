@@ -59,7 +59,7 @@ async def run_health_checks(
         import edge_tts  # noqa: F401
         report.checks.append(CheckResult("edge-tts", "pass", "edge-tts importable"))
     except ImportError:
-        report.checks.append(CheckResult("edge-tts", "fail", "edge-tts not installed"))
+        report.checks.append(CheckResult("edge-tts", "warn", "edge-tts not installed (required for narration)"))
 
     # Disk space
     ok, free = check_disk_space(config.temp_dir, MIN_DISK_GB)

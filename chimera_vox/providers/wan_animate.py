@@ -31,7 +31,7 @@ class WanAnimateProvider(Provider):
 
     def _get_client(self):
         if self._client is None:
-            from gradio_client import Client
+            from gradio_client import Client, handle_file
             kwargs = {}
             if self.hf_token:
                 kwargs["hf_token"] = self.hf_token
@@ -69,7 +69,7 @@ class WanAnimateProvider(Provider):
 
         try:
             result = client.predict(
-                str(image),
+                handle_file(str(image)),
                 prompt,
                 api_name=self._api_name,
             )

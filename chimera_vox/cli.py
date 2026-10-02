@@ -113,6 +113,11 @@ def run(
         "--no-health-check",
         help="Skip pre-flight checks (not recommended).",
     ),
+    dry_run: bool = typer.Option(
+        False,
+        "--dry-run",
+        help="Use mock provider only (no network / ZeroGPU calls). Great for testing the pipeline.",
+    ),
     verbose: bool = typer.Option(
         False, "--verbose", "-v", help="Debug logging."
     ),
@@ -135,6 +140,7 @@ def run(
         providers=provider_list,
         threads=threads,
         skip_health_check=skip_health_check,
+        dry_run=dry_run,
         verbose=verbose,
     )
 

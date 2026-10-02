@@ -32,6 +32,7 @@ class Config:
     providers: list[str] = field(default_factory=lambda: list(DEFAULT_PROVIDERS))
     threads: int | None = None
     skip_health_check: bool = False
+    dry_run: bool = False
     verbose: bool = False
     hf_token: str | None = None
     temp_dir: Path = field(default_factory=lambda: Path(".chimera_tmp"))

@@ -6,12 +6,14 @@ from chimera_vox.errors import ConfigError
 from chimera_vox.providers.base import Provider
 from chimera_vox.providers.cogvideox import CogVideoXProvider
 from chimera_vox.providers.ltx_turbo import LTXTurboProvider
+from chimera_vox.providers.mock import MockProvider
 from chimera_vox.providers.wan_animate import WanAnimateProvider
 
 _REGISTRY: dict[str, type[Provider]] = {
     "ltx": LTXTurboProvider,
     "cogvideox": CogVideoXProvider,
     "wan": WanAnimateProvider,
+    "mock": MockProvider,
 }
 
 

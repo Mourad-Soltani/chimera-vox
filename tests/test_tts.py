@@ -1,5 +1,7 @@
 import pytest
 
+pytest.importorskip("edge_tts")
+
 from chimera_vox.stages.tts import generate_narration
 
 
