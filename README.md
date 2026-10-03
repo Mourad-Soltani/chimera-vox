@@ -24,7 +24,7 @@ video at up to 8K resolution, using only free infrastructure:
 ## Live Demo
 
 **Public Gradio demo (temporary share, up to ~1 week):**  
-https://9f2df5bd8b7ca7cc03.gradio.live
+https://6a0ec265ad8a44e033.gradio.live
 
 Default mode is **Ken Burns** (CPU-only pan/zoom + edge-tts) — always produces a video.  
 Optional Full AI mode tries ZeroGPU Spaces and falls back to Ken Burns if they fail.
