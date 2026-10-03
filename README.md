@@ -48,6 +48,25 @@ Sample output:
 
 (Raw file: [assets/demo_output.mp4](assets/demo_output.mp4))
 
+## Deploy on Render (free interactive)
+
+Permanent free Gradio host (sleeps after 15 min idle).
+
+1. Push is already on GitHub: `Mourad-Soltani/chimera-vox`
+2. Open [Render Dashboard](https://dashboard.render.com/) → **New** → **Web Service**
+3. Connect the GitHub repo `Mourad-Soltani/chimera-vox`
+4. Settings:
+   - **Runtime:** Docker
+   - **Dockerfile path:** `./Dockerfile`
+   - **Plan:** Free
+   - **Health check path:** `/`
+5. Optional env: `HF_TOKEN` for Full AI mode
+6. Create Web Service → wait for build → open the `*.onrender.com` URL
+
+Blueprint alternative: **New** → **Blueprint** → select this repo (`render.yaml`).
+
+> Free tier spins down after 15 minutes without traffic; first request after sleep takes ~30–60s.
+
 ## Quick Start
 
 ```bash

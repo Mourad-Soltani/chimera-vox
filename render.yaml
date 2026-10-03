@@ -1,0 +1,18 @@
+# Render Blueprint — free web service for ChimeraVox Gradio demo
+# Dashboard: New → Blueprint → connect this repo
+# Or: https://dashboard.render.com/blueprints
+
+services:
+  - type: web
+    name: chimera-vox
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      # Optional: higher ZeroGPU quota for Full AI mode
+      - key: HF_TOKEN
+        sync: false

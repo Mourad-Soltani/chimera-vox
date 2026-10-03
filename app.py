@@ -163,9 +163,9 @@ AI image-to-video (ZeroGPU Spaces) is optional and may queue or fail under free-
 
 if __name__ == "__main__":
     demo = build_ui()
+    # Cloud hosts (Render, etc.) inject PORT; never enable share=True in production
     demo.queue(default_concurrency_limit=1).launch(
         server_name="0.0.0.0",
         server_port=int(os.getenv("PORT", "7860")),
-        theme=gr.themes.Soft(),
-        css=".gradio-container {max-width: 960px !important;}",
+        share=False,
     )
