@@ -8,11 +8,16 @@ venv/
 .env
 .chimera_cache/
 .chimera_tmp/
-*.mp4
-*.mp3
-*.wav
+.chimera_tmp_demo/
 *.log
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .DS_Store
+
+# Generated media (except committed demo assets)
+*.mp4
+*.mp3
+*.wav
+!assets/
+!assets/**

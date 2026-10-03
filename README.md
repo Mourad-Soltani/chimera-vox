@@ -7,7 +7,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 **Author:** Mourad Soltani (@Mourad-Soltani)  
-**Version:** 0.1.2
+**Version:** 0.1.3
 
 ChimeraVox turns a still photo plus a written script into a narrated, AI-animated
 video at up to 8K resolution, using only free infrastructure:
@@ -19,6 +19,24 @@ video at up to 8K resolution, using only free infrastructure:
 - **Ken Burns fallback** — if all AI providers fail, you still get a narrated video
 - **spaces.toml** — override Space IDs without touching code
 - **Failure runbook** — `docs/RUNBOOK.md`
+
+
+## Live Demo
+
+**[Open the Gradio demo](https://huggingface.co/spaces/Mourad-Soltani/chimera-vox)** (Ken Burns mode works without GPU queue).
+
+Or run locally:
+
+```bash
+pip install -e ".[dev]"
+pip install gradio
+python app.py
+# → http://127.0.0.1:7860
+```
+
+Sample output (Ken Burns + edge-tts, generated offline):
+
+![Demo photo](assets/demo_photo.png)
 
 ## Quick Start
 
