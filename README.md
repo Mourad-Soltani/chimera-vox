@@ -23,7 +23,12 @@ video at up to 8K resolution, using only free infrastructure:
 
 ## Live Demo
 
-**[Open the Gradio demo](https://huggingface.co/spaces/Mourad-Soltani/chimera-vox)** (Ken Burns mode works without GPU queue).
+**Live now (temporary Gradio share, up to ~1 week):**  
+https://7733de39f4165c98cf.gradio.live
+
+Permanent Space (when HF token is available):  
+`gradio deploy` or push to https://huggingface.co/spaces/Mourad-Soltani/chimera-vox
+
 
 Or run locally:
 
