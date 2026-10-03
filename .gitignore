@@ -16,8 +16,10 @@ venv/
 .DS_Store
 
 # Generated media (except committed demo assets)
-*.mp4
+# *.mp4  (demo assets allowed)
 *.mp3
 *.wav
 !assets/
 !assets/**
+assets/demo_output.mp4
+.gradio/

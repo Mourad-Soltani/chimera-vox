@@ -23,25 +23,28 @@ video at up to 8K resolution, using only free infrastructure:
 
 ## Live Demo
 
-**Live now (temporary Gradio share, up to ~1 week):**  
-https://7733de39f4165c98cf.gradio.live
+**Public Gradio demo (temporary share, up to ~1 week):**  
+https://9f2df5bd8b7ca7cc03.gradio.live
 
-Permanent Space (when HF token is available):  
-`gradio deploy` or push to https://huggingface.co/spaces/Mourad-Soltani/chimera-vox
-
+Default mode is **Ken Burns** (CPU-only pan/zoom + edge-tts) — always produces a video.  
+Optional Full AI mode tries ZeroGPU Spaces and falls back to Ken Burns if they fail.
 
 Or run locally:
 
 ```bash
 pip install -e ".[dev]"
-pip install gradio
+pip install gradio edge-tts
 python app.py
 # → http://127.0.0.1:7860
 ```
 
-Sample output (Ken Burns + edge-tts, generated offline):
+Sample output (Ken Burns + real edge-tts narration):
 
 ![Demo photo](assets/demo_photo.png)
+
+<video src="assets/demo_output.mp4" controls width="640"></video>
+
+(Raw file: [assets/demo_output.mp4](assets/demo_output.mp4))
 
 ## Quick Start
 

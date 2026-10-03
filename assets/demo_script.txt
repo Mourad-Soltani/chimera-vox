@@ -1,0 +1,1 @@
+Welcome to ChimeraVox. This demo turns a single photo and a short script into a narrated video. When AI providers are unavailable, we fall back to a Ken Burns pan over your image. Try the live demo and generate your own.
