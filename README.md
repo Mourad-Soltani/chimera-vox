@@ -23,11 +23,15 @@ video at up to 8K resolution, using only free infrastructure:
 
 ## Live Demo
 
-**Public Gradio demo (temporary share, up to ~1 week):**  
-https://6a0ec265ad8a44e033.gradio.live
+**Permanent showcase (sample video + links):**  
+https://huggingface.co/spaces/Mourad120/chimera-vox-demo
 
-Default mode is **Ken Burns** (CPU-only pan/zoom + edge-tts) — always produces a video.  
-Optional Full AI mode tries ZeroGPU Spaces and falls back to Ken Burns if they fail.
+**Interactive Gradio (temporary share, up to ~1 week):**  
+https://babf30feb95fd3fdc2.gradio.live
+
+> Note: Permanent interactive Gradio on free CPU requires [Hugging Face PRO](https://huggingface.co/pro). The static Space is free and embeds a real pipeline sample.
+
+Default interactive mode is **Ken Burns** (CPU + edge-tts). Full AI mode tries ZeroGPU and falls back automatically.
 
 Or run locally:
 
@@ -38,11 +42,9 @@ python app.py
 # → http://127.0.0.1:7860
 ```
 
-Sample output (Ken Burns + real edge-tts narration):
+Sample output:
 
 ![Demo photo](assets/demo_photo.png)
-
-<video src="assets/demo_output.mp4" controls width="640"></video>
 
 (Raw file: [assets/demo_output.mp4](assets/demo_output.mp4))
 
