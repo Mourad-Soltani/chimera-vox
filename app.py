@@ -85,11 +85,7 @@ def _run(
 
 
 def build_ui() -> gr.Blocks:
-    with gr.Blocks(
-        title="ChimeraVox Demo",
-        theme=gr.themes.Soft(),
-        css=".gradio-container {max-width: 960px !important;}",
-    ) as demo:
+    with gr.Blocks(title="ChimeraVox Demo") as demo:
         gr.Markdown(
             f"""
 # ChimeraVox
@@ -170,4 +166,6 @@ if __name__ == "__main__":
     demo.queue(default_concurrency_limit=1).launch(
         server_name="0.0.0.0",
         server_port=int(os.getenv("PORT", "7860")),
+        theme=gr.themes.Soft(),
+        css=".gradio-container {max-width: 960px !important;}",
     )
