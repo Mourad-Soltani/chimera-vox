@@ -49,6 +49,20 @@ Sample output:
 
 (Raw file: [assets/demo_output.mp4](assets/demo_output.mp4))
 
+
+## Deploy on Streamlit Community Cloud (free)
+
+Interactive demo without Render cold-starts (app sleeps after ~12h idle).
+
+1. Open [share.streamlit.io](https://share.streamlit.io/) and sign in with GitHub
+2. **New app** → repo `Mourad-Soltani/chimera-vox` → branch `main`
+3. Main file path: `streamlit_app.py`
+4. Deploy (uses `packages.txt` for `ffmpeg` + `requirements.txt`)
+
+App URL will look like: `https://<you>-chimera-vox-streamlit-app-xxxx.streamlit.app`
+
+> Keep scripts short on the free tier. Prefer **Ken Burns** mode.
+
 ## Deploy on Render (free interactive)
 
 Permanent free Gradio host (sleeps after 15 min idle).
