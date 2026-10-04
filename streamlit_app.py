@@ -13,6 +13,7 @@ import streamlit as st
 
 from chimera_vox import __version__
 from chimera_vox.config import Config
+from chimera_vox.constants import VOICE_CHOICES
 from chimera_vox.pipeline import run_pipeline_sync
 
 EXAMPLE_SCRIPT = (
@@ -21,15 +22,7 @@ EXAMPLE_SCRIPT = (
     "When AI providers are unavailable, we fall back to a Ken Burns pan over your image."
 )
 
-VOICES = [
-    "en-US-AriaNeural",
-    "en-US-JennyNeural",
-    "en-US-GuyNeural",
-    "en-GB-SoniaNeural",
-    "en-GB-RyanNeural",
-    "fr-FR-DeniseNeural",
-    "fr-FR-HenriNeural",
-]
+VOICES = list(VOICE_CHOICES)
 
 st.set_page_config(
     page_title="ChimeraVox",

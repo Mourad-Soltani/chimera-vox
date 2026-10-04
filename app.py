@@ -14,6 +14,7 @@ from pathlib import Path
 import gradio as gr
 
 from chimera_vox.config import Config
+from chimera_vox.constants import VOICE_CHOICES
 from chimera_vox.pipeline import run_pipeline_sync
 from chimera_vox import __version__
 
@@ -128,15 +129,9 @@ AI image-to-video (ZeroGPU Spaces) is optional and may queue or fail under free-
                         label="Resolution",
                     )
                     voice = gr.Dropdown(
-                        choices=[
-                            "en-US-AriaNeural",
-                            "en-US-JennyNeural",
-                            "en-US-GuyNeural",
-                            "en-GB-SoniaNeural",
-                            "en-GB-RyanNeural",
-                        ],
+                        choices=list(VOICE_CHOICES),
                         value="en-US-AriaNeural",
-                        label="Voice",
+                        label="Voice (EN / FR / AR)",
                     )
                 btn = gr.Button("Generate video", variant="primary")
 

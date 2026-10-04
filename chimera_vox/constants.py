@@ -92,4 +92,38 @@ VOICES: Final[dict[str, str]] = {
     "ryan": "en-GB-RyanNeural",
     "natasha": "en-AU-NatashaNeural",
     "neerja": "en-IN-NeerjaNeural",
+    # French
+    "denise": "fr-FR-DeniseNeural",
+    "henri": "fr-FR-HenriNeural",
+    # Arabic
+    "hamed": "ar-SA-HamedNeural",       # Saudi male
+    "zariyah": "ar-SA-ZariyahNeural",   # Saudi female
+    "salma": "ar-EG-SalmaNeural",       # Egypt female
+    "shakir": "ar-EG-ShakirNeural",     # Egypt male
+    "fatima": "ar-AE-FatimaNeural",     # UAE female
+    "hamdan": "ar-AE-HamdanNeural",     # UAE male
+    "mouna": "ar-MA-MounaNeural",       # Morocco female
+    "jamal": "ar-MA-JamalNeural",       # Morocco male
 }
+
+# Ordered list for CLI / Gradio / Streamlit dropdowns
+VOICE_CHOICES: Final[list[str]] = [
+    # English
+    "en-US-AriaNeural",
+    "en-US-JennyNeural",
+    "en-US-GuyNeural",
+    "en-GB-SoniaNeural",
+    "en-GB-RyanNeural",
+    # French
+    "fr-FR-DeniseNeural",
+    "fr-FR-HenriNeural",
+    # Arabic
+    "ar-SA-HamedNeural",
+    "ar-SA-ZariyahNeural",
+    "ar-EG-SalmaNeural",
+    "ar-EG-ShakirNeural",
+    "ar-AE-FatimaNeural",
+    "ar-AE-HamdanNeural",
+    "ar-MA-MounaNeural",
+    "ar-MA-JamalNeural",
+]
