@@ -46,8 +46,19 @@ def _run(
     temp_dir = out_dir / "tmp"
     temp_dir.mkdir()
 
-    if mode == "Ken Burns (reliable demo)":
-        providers = ["kenburns"]
+    # Static motion presets map 1:1 to provider names
+    _MOTION = {
+        "Ken Burns (zoom center)": "kenburns",
+        "Zoom in": "zoomin",
+        "Zoom out": "zoomout",
+        "Pan left": "panleft",
+        "Pan right": "panright",
+        "Pan up": "panup",
+        "Pan down": "pandown",
+        "Diagonal drift": "drift",
+    }
+    if mode in _MOTION:
+        providers = [_MOTION[mode]]
         dry_run = False
         skip_health = True
     elif mode == "Dry-run (mock colors)":
@@ -55,7 +66,7 @@ def _run(
         dry_run = True
         skip_health = True
     else:
-        # Full AI chain — will auto-fallback to Ken Burns if Spaces fail
+        # Full AI chain — auto-fallback to Ken Burns if Spaces fail
         providers = ["ltx", "cogvideox", "wan"]
         dry_run = False
         skip_health = False
@@ -113,14 +124,21 @@ AI image-to-video (ZeroGPU Spaces) is optional and may queue or fail under free-
                     label="Visual prompt (AI modes only)",
                     placeholder="cinematic slow pan, golden hour…",
                 )
-                mode = gr.Radio(
+                mode = gr.Dropdown(
                     choices=[
-                        "Ken Burns (reliable demo)",
+                        "Ken Burns (zoom center)",
+                        "Zoom in",
+                        "Zoom out",
+                        "Pan left",
+                        "Pan right",
+                        "Pan up",
+                        "Pan down",
+                        "Diagonal drift",
                         "Dry-run (mock colors)",
                         "Full AI (ZeroGPU — may queue)",
                     ],
-                    value="Ken Burns (reliable demo)",
-                    label="Mode",
+                    value="Ken Burns (zoom center)",
+                    label="Mode / motion",
                 )
                 with gr.Row():
                     resolution = gr.Dropdown(

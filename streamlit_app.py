@@ -52,10 +52,17 @@ with col_l:
         "Visual prompt (AI modes only)",
         placeholder="cinematic slow pan, golden hour…",
     )
-    mode = st.radio(
-        "Mode",
+    mode = st.selectbox(
+        "Mode / motion",
         [
-            "Ken Burns (reliable demo)",
+            "Ken Burns (zoom center)",
+            "Zoom in",
+            "Zoom out",
+            "Pan left",
+            "Pan right",
+            "Pan up",
+            "Pan down",
+            "Diagonal drift",
             "Dry-run (mock colors)",
             "Full AI (ZeroGPU — may queue)",
         ],
@@ -97,8 +104,18 @@ if run_btn:
     temp_dir = work / "tmp"
     temp_dir.mkdir()
 
-    if mode.startswith("Ken Burns"):
-        providers, dry_run, skip_health = ["kenburns"], False, True
+    _MOTION = {
+        "Ken Burns (zoom center)": "kenburns",
+        "Zoom in": "zoomin",
+        "Zoom out": "zoomout",
+        "Pan left": "panleft",
+        "Pan right": "panright",
+        "Pan up": "panup",
+        "Pan down": "pandown",
+        "Diagonal drift": "drift",
+    }
+    if mode in _MOTION:
+        providers, dry_run, skip_health = [_MOTION[mode]], False, True
     elif mode.startswith("Dry-run"):
         providers, dry_run, skip_health = ["mock"], True, True
     else:

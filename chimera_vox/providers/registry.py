@@ -5,9 +5,18 @@ from __future__ import annotations
 from chimera_vox.errors import ConfigError
 from chimera_vox.providers.base import Provider
 from chimera_vox.providers.cogvideox import CogVideoXProvider
-from chimera_vox.providers.kenburns import KenBurnsProvider
 from chimera_vox.providers.ltx_turbo import LTXTurboProvider
 from chimera_vox.providers.mock import MockProvider
+from chimera_vox.providers.static_motion import (
+    DriftProvider,
+    KenBurnsProvider,
+    PanDownProvider,
+    PanLeftProvider,
+    PanRightProvider,
+    PanUpProvider,
+    ZoomInProvider,
+    ZoomOutProvider,
+)
 from chimera_vox.providers.wan_animate import WanAnimateProvider
 
 _REGISTRY: dict[str, type[Provider]] = {
@@ -15,8 +24,26 @@ _REGISTRY: dict[str, type[Provider]] = {
     "cogvideox": CogVideoXProvider,
     "wan": WanAnimateProvider,
     "kenburns": KenBurnsProvider,
+    "zoomin": ZoomInProvider,
+    "zoomout": ZoomOutProvider,
+    "panleft": PanLeftProvider,
+    "panright": PanRightProvider,
+    "panup": PanUpProvider,
+    "pandown": PanDownProvider,
+    "drift": DriftProvider,
     "mock": MockProvider,
 }
+
+STATIC_PROVIDERS: tuple[str, ...] = (
+    "kenburns",
+    "zoomin",
+    "zoomout",
+    "panleft",
+    "panright",
+    "panup",
+    "pandown",
+    "drift",
+)
 
 
 def build_provider_chain(
