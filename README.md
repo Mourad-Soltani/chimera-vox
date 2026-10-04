@@ -23,15 +23,16 @@ video at up to 8K resolution, using only free infrastructure:
 
 ## Live Demo
 
-**Permanent showcase (sample video + links):**  
+**Permanent interactive demo (Render):**  
+https://chimera-vox.onrender.com/
+
+**Permanent showcase (sample video):**  
 https://huggingface.co/spaces/Mourad120/chimera-vox-demo
 
-**Interactive Gradio (temporary share, up to ~1 week):**  
-https://babf30feb95fd3fdc2.gradio.live
+Default mode is **Ken Burns** (CPU + edge-tts) — always produces a video.  
+Full AI mode tries ZeroGPU Spaces and falls back to Ken Burns if they fail.
 
-> Note: Permanent interactive Gradio on free CPU requires [Hugging Face PRO](https://huggingface.co/pro). The static Space is free and embeds a real pipeline sample.
-
-Default interactive mode is **Ken Burns** (CPU + edge-tts). Full AI mode tries ZeroGPU and falls back automatically.
+> Render free tier sleeps after 15 minutes idle; first request after sleep can take 30–60s.
 
 Or run locally:
 
@@ -65,7 +66,7 @@ Permanent free Gradio host (sleeps after 15 min idle).
 
 Blueprint alternative: **New** → **Blueprint** → select this repo (`render.yaml`).
 
-> Free tier spins down after 15 minutes without traffic; first request after sleep takes ~30–60s.
+> **Live:** https://chimera-vox.onrender.com/ — free tier spins down after 15 min idle; cold start ~30–60s.
 
 ## Quick Start
 
